@@ -18,8 +18,8 @@ class TCPpackage:
         except:
             raise Exception("解析数据异常！")
 
-    def set_content(self,msg):
-        self._content = bytearray(msg.encode(encoding='utf-8'))
+    def set_content(self,data):
+        self._content = bytearray(data.encode(encoding='utf-8'))
 
     def get_pck_with_head(self):
         pck_length = bytearray(len(self._content).to_bytes(4, byteorder='little'))

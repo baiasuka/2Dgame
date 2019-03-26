@@ -6,13 +6,14 @@ class Picfile:
 
     def init_pic_obj(self):
         """
-        动态添加类的属性，每一个属性指向一个图片文件
+        动态添加类的属性，每一个属性映射一个图片文件路径
         :return:
         """
         dir_path = os.path.join(os.path.dirname(__file__))
         print(dir_path)
         file_list = glob.glob1(dir_path, '*.jpg')
         file_list += glob.glob1(dir_path, '*.png')
+        file_list += glob.glob1(dir_path, '*.gif')
 
         pic_attr = [elem[:-4].upper() + '_IMAGE' for elem in file_list]
         pic_path = [os.path.join(os.path.dirname(__file__)) + r'/' + elem for elem in file_list]
