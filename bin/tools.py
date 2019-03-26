@@ -2,6 +2,7 @@ import socket
 from hashlib import md5
 import psycopg2
 from sqlalchemy import create_engine
+from bin.settings import config
 
 def get_host_ip():
     """
