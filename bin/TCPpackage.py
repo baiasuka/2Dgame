@@ -19,6 +19,7 @@ class TCPpackage:
             raise Exception("解析数据异常！")
 
     def set_content(self,data):
+        data = str(data)
         self._content = bytearray(data.encode(encoding='utf-8'))
 
     def get_pck_with_head(self):

@@ -3,6 +3,10 @@ import socket
 
 from bin.tools import get_host_ip, encrypt_md5, PostgresqlConnection
 
+USERNAME = None
+
+
+
 class LoginSurface:
     def __init__(self, mainWindow):
         self.mainWindow = mainWindow
@@ -26,18 +30,22 @@ class LoginSurface:
         password = encrypt_md5(password)
 
         conn = PostgresqlConnection().conn
+        cur = conn.cursor()
+
         try:
-            with conn.cursor() as cur:
-                sql = 'select password from test.test where username = %s'
-                result = cur.execute(sql, (username))
+            sql = 'select password from test.users where username = %s'
+            cur.execute(sql, [username])
+            result = cur.fetchone()
         except:
-            raise print('登录出错')
+            print('登录出错')
         else:
-            if result == 0:
+            if result is None:
                 info = tkinter.Message(self.face, text='该用户不存在')
                 info.pack()
             else:
-                if cur.fetchone()[0] == password:
+                if result[0] == password:
+                    global USERNAME
+                    USERNAME = username
                     info = tkinter.Message(self.face, text='登陆成功')
                     info.pack()
                     self.face.destroy()
@@ -45,14 +53,22 @@ class LoginSurface:
                 else:
                     info = tkinter.Message(self.face, text='密码错误')
                     info.pack()
+        finally:
+            conn.close()
 
 
 class HallSurface:
     def __init__(self, mainWindow):
+        self.username = USERNAME
+
         self.mainWindow = mainWindow
         self.face = tkinter.Frame(self.mainWindow,)
         self.face.pack()
 
+        btn_login = tkinter.Button(self.face, text='登录', command=self.get_roomlist)
+        btn_login.pack()
+
+    def get_roomlist(self,):
         pass
 
 
@@ -61,7 +77,7 @@ class HallSurface:
 if __name__ == '__main__':
     root = tkinter.Tk()
     root.title('登录')
-    root.geometry('200x200')
+    root.geometry('800x640')
 
     LoginSurface(root)
     root.mainloop()

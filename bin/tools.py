@@ -33,6 +33,9 @@ def encrypt_md5(data, times=1):
     return data
 
 class PostgresqlConnection(object):
+    """
+    postgresql数据库连接工具
+    """
     def __init__(self, host=None, port=None, username=None, password=None, db_name=None):
         self.host = host if host else config.DB_HOST
         self.port = port if port else config.DB_PORT
@@ -92,3 +95,4 @@ class PostgresqlConnection(object):
         print(self.dbs)
         return create_engine('postgresql://{username}:{password}@{host}:{port}/{dbs}'.format(
             username=self.username, password=self.password, host=self.host, port=self.port, dbs=self.dbs))
+
