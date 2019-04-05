@@ -21,10 +21,20 @@ class CilentCore:
         cilentsocket.connect((SERVER_IP, SERVER_PORT))
         return cilentsocket
 
-    def get_roomlist(self):
+    def msg_sender(self):
+        """
+        用于发送消息给服务器
+        :return:
+        """
+        pass
+
+    def msg_handler(self):
         cilentsocket = self.create_socket()
-        msg = Message.request_roomlist()
-        cilentsocket.send(msg.encode('utf-8'))
+        while True:
+            bytes = cilentsocket.recv(1024)
+            while len(bytes) > 0:
+                pass
+
 
 while __name__ == '__main__':
     pass

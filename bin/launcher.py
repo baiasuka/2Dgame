@@ -6,7 +6,7 @@ from bin.tools import get_host_ip, encrypt_md5, PostgresqlConnection
 USERNAME = None
 
 
-
+# 登录界面
 class LoginSurface:
     def __init__(self, mainWindow):
         self.mainWindow = mainWindow
@@ -57,6 +57,7 @@ class LoginSurface:
             conn.close()
 
 
+# 大厅界面
 class HallSurface:
     def __init__(self, mainWindow):
         self.username = USERNAME
