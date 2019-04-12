@@ -22,7 +22,7 @@ class CilentCore:
         cilentsocket.connect((SERVER_IP, SERVER_PORT))
         return cilentsocket
 
-    def pck_sender(self, msg):
+    def pck_sender(self, data):
         """
         用于发送消息给服务器
         :return:
@@ -55,7 +55,8 @@ class CilentCore:
         :return:
         """
         data = TCPpackage(msg).get_content()
-        pass
+        if data['msg_type'] == 'roomlist':
+            pass
 
 
 

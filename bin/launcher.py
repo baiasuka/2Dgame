@@ -66,11 +66,41 @@ class HallSurface:
         self.face = tkinter.Frame(self.mainWindow,)
         self.face.pack()
 
-        btn_login = tkinter.Button(self.face, text='登录', command=self.get_roomlist)
-        btn_login.pack()
+        self.listbox_room = tkinter.Listbox(self.face, selectmod="BROWSE")
+        self.get_roomlist()
+
+        self.listbox_room.bind('<Double-Button-1>', self.enter_room)
+
+        btn_refresh = tkinter.Button(self.face, text='刷新', command=self.refresh_roomlist)
+        btn_refresh.pack()
+
+        btn_create = tkinter.Button(self.face, text='创建房间', command=self.create_room)
+        btn_create.pack()
 
     def get_roomlist(self,):
+        room_list = {'001':'192.168.0.3'}
+        for item in room_list.keys():
+            self.listbox_room.insert(tkinter.END, item)
+        self.listbox_room.pack()
+
+    def refresh_roomlist(self,):
+        room_list = {'002':'192.168.0.4'}
+        #删除旧的房间列表内容
+        old_list_length = self.listbox_room.size()
+        self.listbox_room.delete(first=0, last=old_list_length)
+
+        for item in room_list.keys():
+            self.listbox_room.insert(tkinter.END, item)
+        self.listbox_room.pack()
+
+    def enter_room(self):
         pass
+
+    def create_room(self):
+        pass
+
+
+
 
 
 

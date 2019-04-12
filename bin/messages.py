@@ -5,17 +5,15 @@ class Message:
     host = get_host_ip()
 
     @classmethod
-    def package_roomlist(cls):
-        data = {'cilent_ip':cls.host}
+    def request_roomlist(self):
+        data = {'cilent_ip':self.host}
         data['type'] = 'request_roomlist'
         p = TCPpackage()
         p.set_content(data)
         return p.get_pck_with_head()
 
     @classmethod
-    def parse_roomlist(self,msg):
-        p = TCPpackage(msg)
-        data = p.get_content()
+    def get_roomlist(self, data):
         roomlist = data['roomlist']
         return roomlist
 
