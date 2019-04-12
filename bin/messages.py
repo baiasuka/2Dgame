@@ -1,10 +1,8 @@
 from bin.tools import get_host_ip
 from bin.TCPpackage import TCPpackage
 
-HOST = get_host_ip()
-
 class Message:
-    host = HOST
+    host = get_host_ip()
 
     @classmethod
     def package_roomlist(cls):
@@ -22,4 +20,4 @@ class Message:
         return roomlist
 
 if __name__ == '__main__':
-    print(Message.request_roomlist())
+    pass
