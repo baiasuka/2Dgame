@@ -5,7 +5,7 @@ import sys
 
 from bin.tools import get_host_ip
 from bin.TCPpackage import TCPpackage
-from bin.messages import Message
+from bin.messages import MessageHandler
 
 SERVER_IP = '139.196.254.177'
 SERVER_PORT = 9998
@@ -27,16 +27,20 @@ class CilentCore:
         用于发送消息给服务器
         :return:
         """
-        pass
+        cilent = self.cilentsocket
+        pck = TCPpackage()
+        pck.set_content(data)
+        pck = pck.get_pck_with_head()
+        cilent.send(pck)
 
     def pck_handler(self):
         """
         去掉包长度并获取数据域数据，将数据域数据传给msg_handler进一步处理
         :return:
         """
-        cilentsocket = self.cilentsocket
+        cilent = self.cilentsocket
         while True:
-            bytes = cilentsocket.recv(1024)
+            bytes = cilent.recv(1024)
             while len(bytes) > 0:
                 # 获取包长度
                 pck_length = int.from_bytes(bytes[:4], byteorder='little')
@@ -45,18 +49,9 @@ class CilentCore:
                 # 删除已截取的内容
                 bytes = bytes[4 + pck_length]
                 # 解析内容
-                self.msg_handler(pck_content)
+                data = TCPpackage(pck_content).get_content()
 
-    @classmethod
-    def msg_handler(self,msg):
-        """
-        将数据域数据转化为字典后，根据消息类型做处理
-        :param msg:
-        :return:
-        """
-        data = TCPpackage(msg).get_content()
-        if data['msg_type'] == 'roomlist':
-            pass
+
 
 
 
